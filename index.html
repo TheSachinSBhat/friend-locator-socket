@@ -187,6 +187,9 @@
                   map.fitBounds(bounds);
               }
           }
+
+          // Decrease the Current Map Zoom level if below certain limit
+          var currentBrowserZoom = map.getZoom();
       }
 
       /* Method that updates all the bus current locations on the Google Map */
