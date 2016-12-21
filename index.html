@@ -163,33 +163,39 @@
         /* Add bus markers on the Google Map based on busLocations */
       function addBusMarkers(busLocations) {
 
-          for (var location in busLocations) {
-              var busLocation = busLocations[location];
-              if (busLocation) {
+          // For single location, centre the map and set the zoom level
+          // Reference: http://stackoverflow.com/questions/11454229/how-to-set-zoom-level-in-google-map
+          if (busLocations.length == 1) {
+              var pt = busLocations[0];
+              map.setCenter(pt);
+              map.setZoom(18);
+          }
+          else {
+              for (var location in busLocations) {
+                  var busLocation = busLocations[location];
+                  if (busLocation) {
 
-                  document.getElementById('startLat').innerHTML = busLocation.lat;
-                  document.getElementById('startLon').innerHTML = busLocation.lng;
+                      document.getElementById('startLat').innerHTML = busLocation.lat;
+                      document.getElementById('startLon').innerHTML = busLocation.lng;
 
-                  // Reference: https://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
-                  bounds.extend(busLocation);
+                      // Reference: https://wrightshq.com/playground/placing-multiple-markers-on-a-google-map-using-api-3/
+                      bounds.extend(busLocation);
 
-                  var busMarker = new google.maps.Marker({
-                      position: busLocation,
-                      //title: locations[i].title,
-                      icon: "https://buslocatorapp.herokuapp.com/static/bus_18_2x.png",
-                      map: map
-                  });
+                      var busMarker = new google.maps.Marker({
+                          position: busLocation,
+                          //title: locations[i].title,
+                          icon: "https://buslocatorapp.herokuapp.com/static/bus_18_2x.png",
+                          map: map
+                      });
 
-                  // Push the newly created bus marker into the busMarkers array
-                  busMarkers.push(busMarker);
+                      // Push the newly created bus marker into the busMarkers array
+                      busMarkers.push(busMarker);
 
-                  // Automatically center the map fitting all markers on the screen
-                  map.fitBounds(bounds);
+                      // Automatically center the map fitting all markers on the screen
+                      map.fitBounds(bounds);
+                  }
               }
           }
-
-          // Decrease the Current Map Zoom level if below certain limit
-          var currentBrowserZoom = map.getZoom();
       }
 
       /* Method that updates all the bus current locations on the Google Map */
