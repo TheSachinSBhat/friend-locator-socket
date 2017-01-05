@@ -177,6 +177,20 @@
         /* Add bus markers on the Google Map based on busLocations */
       function addBusMarkers(busLocations) {
 
+          // For single location, centre the map and set the zoom level
+          // Reference: http://stackoverflow.com/questions/11454229/how-to-set-zoom-level-in-google-map
+          if (busLocations.length == 1) {
+              var pt = busLocations[0];
+              map.setCenter(pt);
+              map.setZoom(18);
+
+              /* Add a custom marker on the map */
+              busMarker = new google.maps.Marker({
+                  position: pt,
+                  icon: "https://buslocatorapp.herokuapp.com/static/bus_18_2x.png",
+                  map: map
+              });
+          } else {
               for (var location in busLocations) {
                   var busLocation = busLocations[location];
                   if (busLocation) {
@@ -201,14 +215,7 @@
                       map.fitBounds(bounds);
                   }
               }
-
-          // For single location, centre the map and set the zoom level
-          // Reference: http://stackoverflow.com/questions/11454229/how-to-set-zoom-level-in-google-map
-              if (busLocations.length == 1) {
-                  var pt = busLocations[0];
-                  map.setCenter(pt);
-                  map.setZoom(18);
-              }
+          }
       }
 
       /* Method that updates all the bus current locations on the Google Map */
