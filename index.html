@@ -158,7 +158,7 @@
           var busLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
           //socket.emit('buslocation', busLocation);
           var busLocationData = { 'deviceSessionId': deviceSessionId, 'lat': busLocation.lat(), 'lng': busLocation.lng() };
-          socket.emit('buslocation', busLocationData);
+          socket.broadcast.emit('buslocation', busLocationData);
 
           //updateUserLocation(busLocation);
       }
